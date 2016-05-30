@@ -53,29 +53,23 @@ public class Main
     public static int bSearch(int offset){
         int low = 0;
         int high = offset - 1;
-        int[] offsetData = new int[offset];
         int allLoadedVolumes = 0;
-
-        for (int i = 0; i < offsetData.length; i++) {
-            offsetData[i] = i;
-        }
 
          while(high >= low) {
              int middle = (low + high) / 2;
 
              for (Tank tank : tanks) {
-                 allLoadedVolumes+= tank.calcLoadedVolume(offsetData[middle]);
+                 allLoadedVolumes+= tank.calcLoadedVolume(middle);
              }
-
-                 if(allLoadedVolumes == waterVolume) {
-                         return offsetData[middle];
-                     }
-                 else if(allLoadedVolumes < waterVolume) {
-                         low = middle + 1;
-                     }
-                 else if(allLoadedVolumes > waterVolume) {
-                         high = middle - 1;
-                     }
+             if(allLoadedVolumes == waterVolume) {
+                     return middle;
+                 }
+             else if(allLoadedVolumes < waterVolume) {
+                     low = middle + 1;
+                 }
+             else if(allLoadedVolumes > waterVolume) {
+                     high = middle - 1;
+                 }
              allLoadedVolumes = 0;
             }
         return -1;
